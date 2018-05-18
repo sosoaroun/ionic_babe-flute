@@ -4,6 +4,7 @@ import { IonicPage, NavController, ToastController } from 'ionic-angular';
 
 import { User } from '../../providers/providers';
 import { MainPage } from '../pages';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -23,6 +24,7 @@ export class LoginPage {
   private loginErrorString: string;
 
   constructor(public navCtrl: NavController,
+    public storage: Storage,
     public user: User,
     public toastCtrl: ToastController,
     public translateService: TranslateService) {
@@ -33,9 +35,13 @@ export class LoginPage {
   }
 
   // Attempt to login in through our User service
-  doLogin() {
-    this.user.login(this.account).subscribe((resp) => {
-      this.navCtrl.push(MainPage);
+  async doLogin() {
+     this.user.login(this.account).subscribe((resp) => {
+         console.log("resp");
+       this.storage.set('token', resp['token']);
+       this.storage.set('user', resp['user']);
+       console.log("user content : ",this.storage.get('user'));
+       this.navCtrl.push(MainPage);
     }, (err) => {
       this.navCtrl.push(MainPage);
       // Unable to log in

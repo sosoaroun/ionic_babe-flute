@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Camera } from '@ionic-native/camera';
@@ -14,6 +14,11 @@ import { Settings } from '../providers/providers';
 import { User } from '../providers/providers';
 import { Api } from '../providers/providers';
 import { MyApp } from './app.component';
+import { UsersProvider } from '../providers/users/users';
+import { MatchesProvider } from '../providers/matches/matches';
+import { BabyfootProvider } from '../providers/babyfoot/babyfoot';
+import {AuthInterceptor} from "../interceptor/auth";
+import { TeamProvider } from '../providers/team/team';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -64,9 +69,14 @@ export function provideSettings(storage: Storage) {
     Camera,
     SplashScreen,
     StatusBar,
+    //  {provide : HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi:true},
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    UsersProvider,
+    MatchesProvider,
+    BabyfootProvider,
+    TeamProvider
   ]
 })
 export class AppModule { }

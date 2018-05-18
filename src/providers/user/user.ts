@@ -3,6 +3,7 @@ import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 
 import { Api } from '../api/api';
+import { Storage } from '@ionic/storage';
 
 /**
  * Most apps have the concept of a User. This is a simple provider
@@ -26,22 +27,22 @@ import { Api } from '../api/api';
 @Injectable()
 export class User {
   _user: any;
+  _token: any;
 
-  constructor(public api: Api) { }
+  constructor(public api: Api, private storage:Storage) { }
 
   /**
    * Send a POST request to our login endpoint with the data
    * the user entered on the form.
    */
   login(accountInfo: any) {
-    let seq = this.api.post('login', accountInfo).share();
+    let seq = this.api.post('api/login', accountInfo).share();
 
     seq.subscribe((res: any) => {
       // If the API returned a successful response, mark the user as logged in
-      if (res.status == 'success') {
+
         this._loggedIn(res);
-      } else {
-      }
+
     }, err => {
       console.error('ERROR', err);
     });
@@ -54,7 +55,7 @@ export class User {
    * the user entered on the form.
    */
   signup(accountInfo: any) {
-    let seq = this.api.post('signup', accountInfo).share();
+    let seq = this.api.post('api/register', accountInfo).share();
 
     seq.subscribe((res: any) => {
       // If the API returned a successful response, mark the user as logged in
@@ -73,6 +74,8 @@ export class User {
    */
   logout() {
     this._user = null;
+    this.storage.clear();
+
   }
 
   /**
@@ -80,5 +83,21 @@ export class User {
    */
   _loggedIn(resp) {
     this._user = resp.user;
+    this._token = resp.token;
+
+    this.storage.set('user', resp.user);
+    this.storage.set('token', resp.token);
+  }
+
+  islogguedIn(){
+    return this.storage.get('user');
+  }
+
+    islogguuedIn(){
+        return this._user;
+    }
+
+  get token() : any {
+    return this._token;
   }
 }
