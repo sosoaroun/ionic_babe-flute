@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Api} from "../api/api";
 import {BabyfootProvider} from "../babyfoot/babyfoot";
+import { Storage } from '@ionic/storage';
 
 /*
   Generated class for the MatchesProvider provider.
@@ -12,7 +13,7 @@ import {BabyfootProvider} from "../babyfoot/babyfoot";
 @Injectable()
 export class MatchesProvider {
 
-  constructor(public apiProvider:Api) {
+  constructor(public apiProvider:Api, private storage:Storage) {
 
     console.log('Hello MatchesProvider Provider');
 
@@ -32,5 +33,11 @@ export class MatchesProvider {
     {
         return this.apiProvider.post('match', params)
     }
+
+    findUserMatch()
+    {
+      return this.apiProvider.get('user')
+    }
+
 
 }

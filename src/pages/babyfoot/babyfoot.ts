@@ -49,13 +49,12 @@ export class BabyfootPage {
         });
     }
 
-
-
     ionViewDidLoad() {
         //console.log('ionViewDidLoad BabyfootPage');
 
         this.babyfoot.findAllBaby().subscribe(
             (result:any) => {
+                //console.log('léreuuure', result.body)
                 this.babyfoots = result.body
             },
             (error) => {
@@ -65,8 +64,8 @@ export class BabyfootPage {
 
 
         goToMatch(item:any){
-            console.log(item[0].id)
             this.navCtrl.push("MatchePage", {matchID:item[0].id})
+
         }
 
         createMatch(babyfootId)

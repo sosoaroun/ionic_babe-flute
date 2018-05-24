@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {MatchesProvider} from "../../providers/matches/matches";
+import SailsSocket from "sails-socket";
+import _ from 'lodash'
+import {ChangeDetectorRef} from "@angular/core";
 
 /**
  * Generated class for the MatchePage page.
@@ -16,9 +19,28 @@ import {MatchesProvider} from "../../providers/matches/matches";
 })
 export class MatchePage {
 
-  match:any;
+  match:any = {};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public matches:MatchesProvider) {
+  constructor(private ref: ChangeDetectorRef, public navCtrl: NavController, public navParams: NavParams, public matches:MatchesProvider) {
+    SailsSocket.on('matche', (msg) => {
+      if(msg.verb != 'addedTo') {
+          console.log("coucou");
+          console.log(msg);
+
+          let data = msg.data;
+
+          // this.match.filter(function (table, index) {
+          //     if (table.id == data.id) {
+          //         _.extend(table, data);
+          //     }
+          // });
+
+          // //_.extend change l'objet sur le front sans faire le tour des attributs de l'objet
+
+          // //refresh the view, extend change l'objet sans le rafraichir
+          // ref.detectChanges();
+      }
+  });
   }
 
     matchSelected(match:any){
@@ -39,7 +61,6 @@ export class MatchePage {
         this.matches.findOneMatch(this.navParams.get("matchID")).subscribe(
             (result:any) => {
                 this.match = result
-                //console.log("nav params : ",this.navParams.get("matchID"))
                 console.log(this.match)
             }
         )
