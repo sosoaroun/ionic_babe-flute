@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Api} from "../api/api";
+import {BabyfootProvider} from "../babyfoot/babyfoot";
 
 /*
   Generated class for the MatchesProvider provider.
@@ -12,7 +13,9 @@ import {Api} from "../api/api";
 export class MatchesProvider {
 
   constructor(public apiProvider:Api) {
+
     console.log('Hello MatchesProvider Provider');
+
   }
 
     findTenLastMatch()
@@ -23,6 +26,11 @@ export class MatchesProvider {
     findOneMatch(matchID)
     {
       return this.apiProvider.get('match/'+matchID)
+    }
+
+    create(params)
+    {
+        return this.apiProvider.post('match', params)
     }
 
 }

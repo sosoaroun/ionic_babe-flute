@@ -15,7 +15,7 @@ import {User} from "../providers/user/user";
   template: `<ion-menu [content]="content">
     <ion-header>
       <ion-toolbar>
-        <ion-title>Bienvenu {{username}}</ion-title>
+        <ion-title>Bienvenue {{username}}</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -43,8 +43,8 @@ export class MyApp {
   pages: any[] = [
     { title: 'Login', component: 'LoginPage' },
     { title: 'User', component: 'UserPage' },
-      { title: 'BabyFoot', component: 'BabyfootPage' },
-      { title: 'Ma Team', component: 'TeamPage' }
+    { title: 'BabyFoot', component: 'BabyfootPage' },
+    { title: 'Ma Team', component: 'TeamPage' }
   ]
 
   constructor(public user: User, private translate: TranslateService, platform: Platform, settings: Settings, private config: Config, private statusBar: StatusBar, private splashScreen: SplashScreen, ) {

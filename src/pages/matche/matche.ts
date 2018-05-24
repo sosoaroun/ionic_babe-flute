@@ -39,6 +39,8 @@ export class MatchePage {
         this.matches.findOneMatch(this.navParams.get("matchID")).subscribe(
             (result:any) => {
                 this.match = result
+                //console.log("nav params : ",this.navParams.get("matchID"))
+                console.log(this.match)
             }
         )
     }

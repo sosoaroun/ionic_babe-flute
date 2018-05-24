@@ -14,19 +14,27 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-card *ngFor="let item of babyfoots" (click)="goToMatch(item.match)">
+    <ion-card *ngFor="let item of babyfoots">
 
       <ion-card-header>
         {{item.Lieux}}
       </ion-card-header>
 
       <ion-card-content>
-        {{item.Available}}
+        {{ item.Available ? 'Disponible' : 'Pas disponible'}}
       </ion-card-content>
 
       <ion-card-content>
         {{item.MAX_players}}
       </ion-card-content>
+
+      <button *ngIf="item.Available" ion-button (click)="createMatch(item.id)">
+        Créer match
+      </button>
+
+      <button *ngIf="!item.Available" ion-button (click)="goToMatch(item.match)">
+        Voir Match
+      </button>
 
     </ion-card>
   </ion-list>

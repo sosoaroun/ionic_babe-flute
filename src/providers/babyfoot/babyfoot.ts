@@ -13,7 +13,7 @@ import {fromPromise} from "rxjs/observable/fromPromise";
 @Injectable()
 export class BabyfootProvider {
 
-  constructor(public apiProvider:Api) {
+  constructor(public api:Api) {
     console.log('Hello apiProvider Api');
   }
 
@@ -34,9 +34,10 @@ export class BabyfootProvider {
         return fromPromise(SailsSocket.get('/babyfoot'));
     }
 
-    afficherMatch(item)
+
+    update(params, id)
     {
-        return this.apiProvider.get('match/'+ item)
+        return this.api.put('babyfoot/' + id, params);
     }
 
 
@@ -44,6 +45,7 @@ export class BabyfootProvider {
     {
         //return this.apiProvider.get()
     }
+
 
 
 }
